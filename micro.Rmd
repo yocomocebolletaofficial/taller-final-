@@ -1,0 +1,1655 @@
+---
+title: <span style="color:#ff007c">La conducta de los consumidores</span>
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## <span style="color:#78acff">TEMAS DE REPASO</span>
+
+<span style="color:#ff65bd; font-size:18px;">
+1. ¿Cuáles son los cuatro supuestos básicos sobre las preferencias individuales? Explique la importancia o el significado de cada uno.
+</span>
+
+<span style="color:#ffccf5">conpletitud:</span> Significa que una persona puede comparar cualquier par de opciones. Siempre puede decir si prefiere una sobre otra o si le gustan por igual. Por ejemplo, entre una hamburguesa y un filete, puede decir cuál le gusta más o si le da igual. Esto no significa que siempre elija lo que más le gusta, porque también influye el precio.
+Importancia:
+Este supuesto es necesario para que se puedan analizar las decisiones de consumo. Si una persona no pudiera comparar dos opciones, no podríamos entender ni predecir su comportamiento.
+
+
+ <span style="color:#ffccf5">Transitividad:</span> Si una persona prefiere la opción A a la B, y la B a la C, entonces también debería preferir la A a la C. Esto ayuda a que sus decisiones tengan sentido y sean coherentes.
+Importancia:
+La transitividad hace que las decisiones del consumidor sean coherentes y lógicas. Sin ella, el consumidor podría dar vueltas en círculos sin tomar una decisión clara.
+
+
+<span style="color:#ffccf5">Cuanto más, mejor:</span> Se supone que a la gente le gustan más las cosas buenas que las malas. Entonces, si le ofrecen más cantidad de algo bueno, lo va a preferir. Por ejemplo, si le gustan las manzanas, preferirá tener 5 que solo 2. Esto no aplica a cosas malas como la contaminación.
+Importancia:
+Este supuesto ayuda a dibujar las curvas de indiferencia hacia afuera y hace que tengan pendiente negativa (si tienes más de un bien, necesitas menos del otro para estar igual de satisfecho). También simplifica el análisis y refleja una conducta común: preferimos más, no menos.
+
+
+<span style="color:#ffccf5">convexidad:</span>
+Esto significa que a medida que una persona tiene más de un bien (por ejemplo, alimentos), está dispuesta a dar menos del otro bien (como ropa) para conseguir aún más alimentos. En otras palabras, cuantas más manzanas tienes, menos estás dispuesto a cambiar ropa por más manzanas.
+Las curvas de indiferencia (líneas que muestran combinaciones de bienes que dan la misma satisfacción) tienen forma de curva hacia adentro (convexa) por esta razón. Reflejan que el consumidor prefiere combinaciones equilibradas: ni solo ropa ni solo comida, sino un poco de cada uno.
+Por ejemplo:
+Una persona puede preferir tener 3 comidas y 6 ropas (cesta D) a tener 1 comida y 16 ropas (cesta C), aunque ambas combinaciones le den la misma satisfacción.
+Pero si le ofrecen 6 comidas y 8 ropas, esa combinación le gusta más porque está más equilibrada.
+¿Por qué pasa esto?
+Porque cuanto más tienes de algo, menos lo valoras en comparación con lo que te falta. Por eso, al tener muchos alimentos, no estás dispuesto a entregar tanta ropa para conseguir más comida. Esta lógica se llama relación marginal de sustitución decreciente, y por eso las curvas de indiferencia suelen ser convexas
+Importancia:
+Este supuesto es clave para que las curvas de indiferencia sean curvas hacia adentro (convexas) y para que el consumidor tenga un punto óptimo de consumo, donde logra el mayor bienestar posible con su presupuesto. Sin convexidad, las soluciones podrían ser extremos no realistas (todo de un bien y nada del otro).
+ 
+<span style="color:#ff65bd; font-size:18px;">
+2.¿Puede tener un conjunto de curvas de indiferencia pendiente positiva? En caso afirmativo, ¿qué le diría eso sobre los dos bienes?
+</span>
+
+Sí, pero solo en casos especiales, cuando al menos uno de los bienes no es deseable, es decir, es un mal por ejemplo algunas cosas como la contaminación del aire son males: cuanto menos, mejor.
+
+En estos casos, las curvas de indiferencia pueden tener pendiente positiva, ya que el consumidor necesitaría más de un bien bueno para compensar un aumento en la cantidad de un mal. Por ejemplo, si se le obliga a consumir más contaminación (mal), también tendría que recibir más aire limpio (bien) para mantenerse igual de satisfecho.
+
+Para representar esto en el análisis de preferencias, se redefine el mal como su opuesto positivo. Así, en vez de representar "contaminación", se representa "aire limpio". De este modo, las curvas de indiferencia recuperan su forma habitual con pendiente negativa, y se puede seguir utilizando la teoría del consumidor sin alterar sus supuestos fundamentales.
+
+<span style="color:#ff65bd; font-size:18px;">
+ 3.	Explique por qué dos curvas de indiferencia no pueden cortarse.
+</span>
+
+Las curvas de indiferencia no pueden cortarse porque violarían los supuestos básicos sobre las preferencias del consumidor, especialmente la transitividad y el supuesto de que cuanto más, mejor.
+
+```{r curvas-cruzadas, echo=FALSE, fig.width=7, fig.height=5}
+library(ggplot2)
+
+# Curvas que se cruzan en (10, 10)
+indiferencia1 <- function(x) 100 / x
+indiferencia2 <- function(x) 20 - x
+
+x_vals <- seq(1, 19, length.out = 200)  # evitar dividir por 0
+
+df <- data.frame(
+  Alimentos = rep(x_vals, 2),
+  Vestido = c(indiferencia1(x_vals), indiferencia2(x_vals)),
+  Utilidad = factor(rep(c("U1", "U2"), each = length(x_vals)))
+)
+
+# Punto de cruce
+punto_cruce <- data.frame(
+  Alimentos = 10,
+  Vestido = 10,
+  Etiqueta = "cruze"
+)
+
+ggplot(df, aes(x = Alimentos, y = Vestido, color = Utilidad)) +
+  geom_line(linewidth = 1.5) +
+  geom_point(data = punto_cruce, aes(x = Alimentos, y = Vestido), color = "black", size = 3) +
+  geom_text(data = punto_cruce, aes(label = Etiqueta), vjust = -1, color = "black", size = 5) +
+  scale_color_manual(values = c("pink", "red")) +
+  labs(
+    x = "Alimentos",
+    y = "Vestido",
+    color = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none")
+
+```
+
+dos curvas de indiferencia se cruzan en el punto C.
+Si el consumidor es indiferente entre las cestas C y B (porque están en la misma curva U1),
+
+y también es indiferente entre C y D (porque están en la curva U2),
+entonces, por transitividad, también debería ser indiferente entre B y D.
+Pero eso no puede ser cierto, porque la cesta B tiene más cantidad de ambos bienes que la cesta D, y por el supuesto de “cuanto más, mejor”, el consumidor debería preferir B a D, no ser indiferente.
+Por lo tanto, las curvas de indiferencia no se pueden cortar, ya que eso contradice los principios fundamentales de las preferencias racionales del consumidor.
+
+<span style="color:#ff65bd; font-size:18px;">
+ 4. Juan siempre está dispuesto a intercambiar una lata de Coca-Cola por una de Sprite o una de Sprite por una de Coca-Cola. 
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+ a. ¿Qué puede decir sobre la relación marginal de sustitución de Juan?
+</span>
+
+Si Juan siempre está dispuesto a intercambiar una lata de Coca-Cola por una de Sprite, sin importar cuántas tenga de cada una, entonces está tratando ambos bienes como sustitutivos perfectos.
+
+Esto significa que su relación marginal de sustitución (RMS) es constante.
+
+En este caso, la RMS = 1, porque está dispuesto a cambiar 1 Coca-Cola por 1 Sprite en cualquier momento.
+
+Juan valora ambos bienes por igual y puede sustituir uno por otro sin pérdida de satisfacción.
+
+<span style="color:#9feaff; font-size:18px;">
+ b. Trace un conjunto de curvas de indiferencia de Juan.
+</span>
+
+
+```{r indiferencia-lineal, echo=FALSE, fig.width=4, fig.height=4}
+library(ggplot2)
+
+coca <- seq(0, 4, by = 0.1)
+niveles_utilidad <- c(1, 2, 3, 4)
+
+df <- do.call(rbind, lapply(niveles_utilidad, function(u) {
+  data.frame(CocaCola = coca, Sprite = u - coca, Utilidad = factor(u))
+}))
+
+df <- df[df$Sprite >= 0, ]
+
+ggplot(df, aes(x = CocaCola, y = Sprite, group = Utilidad)) +
+  geom_line(color = "#ff007c", linewidth = 1.5) +
+  scale_x_continuous(breaks = 0:4, limits = c(0, 4)) +
+  scale_y_continuous(breaks = 0:4, limits = c(0, 4)) +
+  labs(x = "Coca-Cola", y = "Sprite") +
+  theme_minimal(base_size = 14)
+```
+
+<span style="color:#9feaff; font-size:18px;">
+ c. Trace dos rectas presupuestarias de pendientes diferentes e ilustre la elección maximizadora de la satisfacción
+</span>
+
+```{r rectas-presupuestarias-juan, echo=FALSE, fig.width=7, fig.height=5}
+# Rectas presupuestarias con diferentes precios relativos
+x <- seq(0, 12, length.out = 100)
+
+# Supongamos una renta de 12 unidades monetarias
+# Precios:
+# Caso 1: Coca = 1, Sprite = 1 → pendiente -1
+# Caso 2: Coca = 1, Sprite = 0.5 → pendiente -2 (Sprite más barato)
+# Caso 3: Coca = 0.5, Sprite = 1 → pendiente -0.5 (Coca más barato)
+
+df <- data.frame(
+  CocaCola = rep(x, 3),
+  Sprite = c(12 - x, 24 - 2 * x, 6 - 0.5 * x),
+  Presupuesto = factor(rep(c("Precios iguales", "Sprite barato", "Coca-Cola barata"), each = 100))
+)
+
+ggplot(df, aes(x = CocaCola, y = Sprite, color = Presupuesto)) +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = c("pink", "lightblue", "#9feaff")) +
+  labs(
+    x = "Coca-Cola (latas)",
+    y = "Sprite (latas)",
+    title = "Rectas presupuestarias y elección de Juan"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+<span style="color:#9feaff; font-size:18px;">
+ d. ¿Qué conclusión puede extraer?
+</span>
+
+Cuando los bienes son sustitutivos perfectos, el consumidor no tiene preferencia por combinaciones equilibradas.  
+Su decisión está guiada únicamente por los precios relativos: elegirá siempre el bien que le dé más cantidad por el mismo gasto.
+
+Como Juan considera Coca-Cola y Sprite como sustitutivos perfectos, siempre elegirá la combinación que le permita alcanzar la curva de indiferencia más alta posible, dada su restricción presupuestaria.
+
+Si los precios de Coca-Cola y Sprite son iguales, su RMS = relación de precios, por lo que cualquier combinación sobre la recta presupuestaria es óptima.
+
+Si uno de los productos es más barato (como lo indican las dos rectas presupuestarias con diferentes pendientes en el gráfico), entonces Juan consumirá solo el más barato.
+
+En el gráfico, la elección óptima se da donde la curva de indiferencia es tangente (o coincide completamente) con la recta presupuestaria, pero para bienes perfectamente sustitutivos, eso ocurre en los extremos (todo de uno o del otro), salvo que los precios sean iguales.
+
+<span style="color:#ff65bd; font-size:18px;">
+ 5. ¿Qué ocurre con la relación marginal de sustitución cuando nos movemos a lo largo de una curva de indiferencia convexa? ¿Y de una curva de indiferencia lineal?
+</span>
+
+Cuando descendemos a lo largo de una curva de indiferencia convexa, la relación marginal de sustitución disminuye.
+Esto quiere decir que el consumidor está dispuesto a renunciar a cada vez menos cantidad de un bien para obtener una unidad adicional del otro.
+
+```{r fpp-graph, echo=FALSE, fig.width=4, fig.height=4}
+library(ggplot2)
+
+# Datos de los puntos en la FPP
+fpp <- data.frame(
+  Alimentos = c(1, 2, 3, 4, 5),
+  Vestido = c(16, 11, 7, 4, 3),
+  Punto = c("C", "B", "D", "E", "F")
+)
+
+# Líneas verticales de pérdida de vestido por cada unidad extra de alimento
+lineas <- data.frame(
+  x = c(1, 2, 3, 4),
+  xend = c(2, 3, 4, 5),
+  y = c(16, 11, 7, 4),
+  yend = c(11, 7, 4, 3)
+)
+
+# Texto con los cambios marginales de vestido
+cambios <- data.frame(
+  x = c(1.5, 2.5, 3.5, 4.5),
+  y = c(13.5, 9, 5.5, 3.5),
+  label = c("-6", "-4", "-3", "-1")
+)
+
+ggplot() +
+  geom_line(data = fpp, aes(x = Alimentos, y = Vestido), color = "lightblue", linewidth = 1.5) +
+  geom_point(data = fpp, aes(x = Alimentos, y = Vestido), size = 2) +
+  geom_text(data = fpp, aes(x = Alimentos, y = Vestido + 0.8, label = Punto), fontface = "bold") +
+  geom_segment(data = lineas, aes(x = x, xend = xend, y = y, yend = yend), linetype = "dashed") +
+  geom_text(data = cambios, aes(x = x, y = y, label = label), size = 4) +
+  scale_x_continuous(breaks = 1:5, limits = c(0.5, 5.5)) +
+  scale_y_continuous(breaks = seq(0, 16, 2), limits = c(2, 17)) +
+  labs(x = "Alimentos (unidades semanales)", y = "Vestido (unidades semanales)") +
+  theme_minimal(base_size = 14)
+```
+
+La RMS del vestido por alimentos pasa de 6 a 4, luego a 2, y finalmente a 1.
+Esto refleja que cuanto más alimento tiene una persona, menor es el valor que le da a obtener más y, por tanto, está dispuesta a renunciar a menos vestido para conseguirlo.
+Este comportamiento se conoce como relación marginal de sustitución decreciente y es una característica clave de las preferencias convexas
+¿Y en una curva de indiferencia lineal?
+Cuando la curva de indiferencia es lineal, la RMS es constante.
+Esto sucede cuando los bienes son sustitutivos perfectos, es decir, el consumidor está siempre dispuesto a intercambiar una cantidad fija de un bien por otra del otro, sin importar cuánto tenga de cada uno.
+Por ejemplo, si alguien está siempre dispuesto a cambiar 1 vaso de zumo de naranja por 1 de manzana, sin importar cuántos tiene, la curva de indiferencia es una línea recta con pendiente constante.
+
+<span style="color:#ff65bd; font-size:18px;">
+6. Explique por qué la RMS de una persona entre dos bienes debe ser igual a la relación de precios de los bienes para que esa persona logre la máxima satisfacción.
+</span>
+
+Para que un consumidor logre la máxima satisfacción, dados su ingreso y los precios de los bienes, debe elegir la combinación de bienes en la que una curva de indiferencia sea tangente a su recta presupuestaria.
+En ese punto de tangencia:
+La pendiente de la curva de indiferencia, que es la RMS,
+es igual a la pendiente de la recta presupuestaria, que es la relación de precios de los bienes (–PA/PV).
+Esto significa que el consumidor valora intercambiar los bienes de la misma manera en que el mercado lo permite.
+Si no fuera así, podría reorganizar su consumo para obtener más satisfacción sin gastar más, lo cual indica que aún no ha alcanzado el máximo.
+Por ejemplo, si el consumidor está dispuesto a cambiar 2 unidades de vestido por 1 de alimento (RMS = 2), pero el mercado solo le exige 1 unidad de vestido por 1 de alimento (relación de precios = 1), entonces puede obtener más satisfacción comprando más alimento y menos vestido. Solo cuando ambos son iguales, no hay incentivos para seguir cambiando la combinación.
+
+<span style="color:#ff65bd; font-size:18px;">
+7.	Describa las curvas de indiferencia correspondientes a dos bienes que son sustitutivos perfectos. ¿Qué ocurre si son complementarios perfectos? 
+</span>
+
+<span style="color:#9feaff">sustitutivos perfectos:</span>
+
+Cuando dos bienes son sustitutivos perfectos, el consumidor está completamente dispuesto a intercambiarlos en una proporción constante. Es decir, le da lo mismo consumir uno u otro, siempre que mantenga esa proporción.
+En este caso, las curvas de indiferencia son líneas rectas con pendiente constante.
+Por ejemplo, si un consumidor está dispuesto a cambiar 1 vaso de zumo de manzana por 1 vaso de zumo de naranja, las curvas de indiferencia tendrán pendiente –1.
+
+
+<span style="color:#9feaff">complementarios perfectos</span>
+
+
+Cuando dos bienes son complementarios perfectos, el consumidor solo obtiene satisfacción si los consume juntos en proporciones fijas.
+Por ejemplo, los zapatos del pie izquierdo y del derecho: un solo zapato no sirve sin el otro.
+En este caso, las curvas de indiferencia tienen forma de ángulo recto (en "L"), porque agregar más cantidad de un bien sin su complemento no mejora la satisfacción.
+
+
+<span style="color:#ff65bd; font-size:18px;">
+8.	 ¿Qué diferencia hay entre la utilidad ordinal y la utilidad cardinal? Explique por qué no es necesario el supuesto de la utilidad cardinal para ordenar las elecciones del consumidor
+</span>
+
+<span style="color:#ffccf5">La utilidad ordinal</span> es una forma de representar las preferencias del consumidor que solo ordena las cestas de mercado. Es decir, indica cuál cesta se prefiere a otra, pero no dice cuánto más se prefiere.
+Por ejemplo, si una persona prefiere la cesta A a la B, y la B a la C, una función de utilidad ordinal puede asignar los valores 3, 2 y 1, respectivamente.
+Lo importante no es el número, sino el orden.
+
+En cambio, <span style="color:#ffccf5">la utilidad cardinal</span> supone que sí es posible medir la intensidad de la preferencia.
+Esto quiere decir que la diferencia entre los valores numéricos tiene sentido, y permite decir, por ejemplo, que una cesta da el doble de satisfacción que otra.
+¿Por qué no es necesario el supuesto de utilidad cardina para ordenar las elecciones del consumidor?
+No necesitamos medir “cuánto” se prefiere una cesta a otra para analizar el comportamiento del consumidor.
+Basta con saber qué cestas se prefieren a otras, lo cual se logra con la utilidad ordinal.
+La teoría del consumidor puede desarrollarse completamente sin necesidad de medir la magnitud de la utilidad.
+
+<span style="color:#ff65bd; font-size:18px;">
+9.	Tras la fusión con la economía de Alemania Occidental, los consumidores de Alemania Oriental mostraron una preferencia por los automóviles Mercedes-Benz frente a los Volkswagen. Sin embargo, cuando convirtieron sus ahorros en marcos alemanes, acudieron a los concesionarios de Volkswagen. ¿Cómo puede explicar esta aparente paradoja?
+</span>
+
+Aunque los consumidores de Alemania Oriental preferían los automóviles Mercedes-Benz frente a los Volkswagen (es decir, tenían una mayor utilidad o satisfacción esperada con un Mercedes), terminaron comprando Volkswagens después de la reunificación.
+
+Esta aparente paradoja se explica fácilmente con los conceptos de la teoría del consumidor:
+Preferencias: Los consumidores ordenan las opciones y pueden preferir un Mercedes a un Volkswagen.
+Restricción presupuestaria: Sin embargo, su renta era limitada. Tras convertir sus ahorros en marcos alemanes, no tenían suficiente dinero para comprar un Mercedes-Benz, que era mucho más caro.
+Por tanto, aunque los Mercedes se encontraban en una curva de indiferencia más alta (más deseada), no estaban dentro de su recta presupuestaria.
+La mejor opción que sí podían permitirse era un Volkswagen, que estaba en la curva de indiferencia más alta posible dentro de su presupuesto.
+Esto ilustra perfectamente cómo, en la teoría del consumidor:
+“Los consumidores eligen la combinación de bienes que maximiza su satisfacción dada su restricción presupuestaria.”
+
+<span style="color:#ff65bd; font-size:18px;">
+10. Trace una recta presupuestaria y a continuación una curva de indiferencia para ilustrar la elección maximizadora de la satisfacción correspondiente a dos productos. Utilice su gráfico para responder a las siguientes preguntas:
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+a. Suponga que se raciona uno de los productos.
+Explique por qué es probable que empeore el bienestar del consumidor.
+</span>
+
+Cuando al consumidor no se le permite comprar tanto como quiere de uno de los productos (por ejemplo, solo puede comprar 5 unidades como máximo), ya no puede llegar a la combinación que más le gusta. Como tiene menos opciones, termina eligiendo algo que le gusta menos, y eso significa que su nivel de satisfacción baja.
+
+<span style="color:#9feaff; font-size:18px;">
+b. Suponga que el precio de uno de los productos se
+fija en un nivel inferior al precio vigente. Como consecuencia, el consumidor no puede comprar tanto
+como le gustaría. ¿Puede decir si el bienestar del
+consumidor mejora o empeora?
+</span>
+
+Aunque el precio más bajo parece una buena noticia, si al mismo tiempo no le permiten comprar todo lo que desea (por ejemplo, solo puede comprar 3 unidades con descuento), entonces no puede aprovechar ese precio para llegar a su punto ideal. Por eso, no mejora su situación y, de hecho, puede terminar peor que antes.
+
+```{r echo=FALSE}
+library(ggplot2)
+
+# Eje X: Producto A (ej. comida), eje Y: Producto B (ej. ropa)
+x_vals <- seq(1, 20, length.out = 200)
+
+# Recta presupuestaria: y = 20 - 0.5x
+recta <- 20 - 0.5 * x_vals
+
+# Curva de indiferencia (supongamos utilidad U = 25): y = (25 / x)^0.6
+curva <- (25 / x_vals)^0.6
+
+# Data frame
+df <- data.frame(
+  ProductoA = x_vals,
+  ProductoB_recta = recta,
+  ProductoB_indiferencia = curva
+)
+
+# Punto de elección óptima (intersección de ambas curvas)
+punto_optimo <- data.frame(ProductoA = 10, ProductoB = 15)
+
+# Gráfico
+ggplot(df) +
+  geom_line(aes(x = ProductoA, y = ProductoB_recta), color = "#78acff", linewidth = 1.3) +
+  geom_line(aes(x = ProductoA, y = ProductoB_indiferencia), color = "#ff007c", linewidth = 1.3) +
+  geom_point(data = punto_optimo, aes(x = ProductoA, y = ProductoB), color = "lightblue", size = 3) +
+  labs(
+    title = "",
+    x = "Producto A",
+    y = "Producto B"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+<span style="color:#ff65bd; font-size:18px;">
+11. Basándose en sus preferencias, Roberto está dispuesto a cambiar cuatro entradas de cine por una de baloncesto. Si las entradas de cine cuestan 8 dólares cada una y una de baloncesto cuesta 40, ¿debe Roberto hacer el intercambio? ¿Por qué sí o por qué no?
+</span>
+
+Roberto no debería hacer el intercambio, porque el precio que el mercado le pide (5 entradas de cine) es mayor que lo que él está dispuesto a pagar según sus preferencias (4).
+No alcanzaría el mismo nivel de satisfacción, por lo que el intercambio no es óptimo para él.
+Roberto está dispuesto a intercambiar 4 entradas de cine por 1 entrada de baloncesto. Esto indica que su relación marginal de sustitución (RMS) del baloncesto por cine es:
+$$ RMS = \frac{4cine}{1baloncesto} = 4 $$
+Esto quiere decir que, según sus preferencias, valora una entrada de baloncesto tanto como 4 de cine.
+Ahora analicemos los precios de mercado:
+Entrada de cine: $8
+Entrada de baloncesto: $40
+Entonces, la relación de precios es:
+
+$$\frac{𝑃 baloncesto}{𝑃 cine} = \frac{40}{8} = 5$$
+<span style="color:#ff65bd; font-size:18px;">
+12. Describa el principio equimarginal. Explique por qué podría no cumplirse si la utilidad marginal del consumo de uno de los bienes o de los dos es creciente.
+</span>
+
+El principio equimarginal (también llamado condición de equilibrio del consumidor) dice que el consumidor maximiza su utilidad cuando el último dólar gastado en cada bien genera la misma utilidad marginal por dólar gastado.
+Es decir, para alcanzar la máxima satisfacción, el consumidor debe asignar su ingreso de manera que:
+$$\frac{UMA}{PA}=\frac{UMB}{PB}$$
+Dónde: 𝑈𝑀𝐴 y 𝑈𝑀𝐵 son las utilidades marginales de los bienes A y B. 
+𝑃𝐴 y 𝑃𝐵 son sus respectivos precios.
+Esto significa que no puede aumentar su utilidad redistribuyendo el gasto entre los bienes. Si un bien da más utilidad por dólar que otro, entonces debería consumir más de ese bien y menos del otro hasta que se igualen.
+
+<span style="color:#9feaff; font-size:18px;">
+¿Por qué podría no cumplirse este principio?
+</span>
+El principio puede fallar si la utilidad marginal de alguno de los bienes es creciente, es decir, si cuanto más se consume, mayor es la utilidad adicional que se obtiene.
+En condiciones normales, la utilidad marginal es decreciente: cuanto más tienes de algo, menos te satisface cada unidad adicional.
+Pero si la utilidad marginal aumenta con el consumo, el consumidor querrá consumir más y más de ese bien, alejándose del equilibrio equimarginal.
+En ese caso: El consumidor no detiene el consumo cuando la utilidad marginal por dólar se iguala.
+Puede concentrar todo su ingreso en un solo bien, lo que rompe el equilibrio
+
+<span style="color:#ff65bd; font-size:18px;">
+13. El precio de las computadoras ha bajado significativamente en las dos últimas décadas. Utilice este descenso del precio para explicar por qué es probable que el índice de precios de consumo sobreestime significativamente el índice del coste de la vida de las personas que utilizan mucho las computadoras.
+</span>
+
+El IPC se describe como una medida del coste de una cesta fija de bienes y servicios consumidos por un hogar típico. El texto aclara que:
+“El IPC mide cuánto cambia el coste de vida al comparar cuánto costaría hoy una cesta fija con lo que costaba en el año base.”
+
+uando el precio de las computadoras baja, los consumidores tienden a:
+Comprar más computadoras (porque ahora son más asequibles).
+Sustituir otros bienes (como máquinas de escribir, calculadoras o incluso televisión) por computadoras.
+Obtener más calidad y funcionalidad por el mismo o menor precio.
+Pero el IPC:
+No capta ese cambio en el patrón de consumo, porque usa una cesta fija.
+No mide correctamente las mejoras en la calidad del producto.
+Por lo tanto, sobreestima el aumento del coste de la vida, especialmente para quienes usan computadoras de forma intensiva.
+
+El IPC sobreestima el coste de la vida cuando los precios bajan y los consumidores cambian sus hábitos de compra, porque no refleja que el consumidor puede obtener más utilidad con menos gasto. En el caso de las computadoras, esto es especialmente claro: han bajado de precio, han mejorado en calidad, y sin embargo el IPC no refleja completamente ese beneficio.
+
+<span style="color:#ff65bd; font-size:18px;">
+14. Explique por qué el índice de Paasche generalmente subestima el índice ideal del coste de la vida.
+</span>
+
+El índice de Paasche utiliza las cantidades del año actual como ponderaciones.
+Como los consumidores tienden a sustituir los bienes que se han encarecido por otros más baratos, el índice de Paasche tiende a subestimar el aumento del coste de la vida, ya que refleja un consumo ya ajustado a los nuevos precios.
+
+Por tanto, no mide cuánto costaría mantener el mismo nivel de bienestar, sino el coste de una cesta adaptada al cambio de precios.
+
+El índice de Paasche subestima el índice ideal del coste de la vida porque:
+Usa las cantidades actuales (ya ajustadas al cambio de precios).
+Refleja un menor impacto del aumento de precios porque el consumidor ya ha sustituido los bienes más caros.
+
+No indica cuánto dinero necesitaría el consumidor para mantener el mismo nivel de utilidad que antes del cambio.
+
+## <span style="color:#78acff">EJERCICIOS</span>
+
+<span style="color:#ff65bd; font-size:18px;">
+1. En este capítulo, las preferencias de los consumidores por los distintos bienes no variaban durante el análisis. Sin embargo, en algunas situaciones las preferencias varían cuando se consume. Explique por qué y cómo podrían variar las preferencias en el transcurso del tiempo con el consumo de estos dos bienes:
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+a. cigarrillos
+</span>
+
+Con los cigarrillos, las preferencias pueden cambiar a medida que se consumen más, debido a la adicción.
+Una persona puede disfrutar fumar desde el inicio, pero con el tiempo, al desarrollar dependencia a la nicotina, su deseo por consumir cigarrillos aumenta, y cada unidad adicional le resulta más valiosa que la anterior. En este caso, la utilidad marginal del consumo crece con el uso repetido, lo cual contradice el supuesto básico de que la utilidad marginal disminuye a medida que se consume más de un bien.
+
+<span style="color:#9feaff; font-size:18px;">
+b. Cenar por primera vez en un restaurante que tiene una cocina especial
+</span>
+
+En este caso, las preferencias pueden evolucionar a partir de la experiencia: una persona que prueba por primera vez un tipo de cocina desconocido, como la tailandesa o etíope, puede descubrir que le gusta y, a partir de esa experiencia positiva, empezar a valorarla más y querer repetirla. Así, el acto de consumir no solo satisface un deseo actual, sino que también transforma sus gustos futuros, haciendo que ese bien gane mayor importancia para el consumidor
+
+
+En este capítulo, se supuso que las preferencias del consumidor son estables.
+Pero en la realidad, las preferencias pueden cambiar con el tiempo o con la experiencia de consumo. Este cambio puede ser resultado de factores como la adicción, el aprendizaje, la novedad o el gusto adquirido.
+
+<span style="color:#ff65bd; font-size:18px;">
+2. Trace las curvas de indiferencia correspondientes a las preferencias de las siguientes personas por dos bienes: hamburguesas y bebidas refrescantes. Indique el sentido en que aumenta la satisfacción (o utilidad) de los individuos.
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+a. José tiene curvas de indiferencia convexas y no le gustan ni las hamburguesas ni las bebidas refrescantes.
+</span>
+
+```{r convexas, echo=FALSE, fig.width=4, fig.height=4}
+library(ggplot2)
+
+# Generar los datos
+x <- seq(0.1, 6, length.out = 300)  # Evitamos dividir entre 0
+y1 <- 10 / x
+y2 <- 8 / x
+y3 <- 6 / x
+
+# Paleta Sugar Rush
+sugar_rush_colors <- c("#FF66B3", "#FFCCFF", "#FFFF99", "#99CCFF")
+
+# Crear data frame
+datos <- data.frame(
+  x = rep(x, 3),
+  y = c(y1, y2, y3),
+  curva = factor(rep(c("U = 10", "U = 8", "U = 6"), each = length(x)))
+)
+
+# Graficar con colores personalizados
+ggplot(datos, aes(x = x, y = y, color = curva)) +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = sugar_rush_colors[2:4]) +  # Usamos los 3 primeros colores
+  labs(title = "",
+       x = "hamburguesas",
+       y = "bebidas",
+       color = "Nivel de utilidad") +
+  theme_minimal()
+
+```
+
+<span style="color:#9feaff; font-size:18px;">
+b. A Juana le encantan las hamburguesas y no le gustan las bebidas refrescantes. Si le sirven una bebida refrescante, la tira en lugar de bebérsela.
+</span>
+
+```{r echo=FALSE}
+# Cargar librería
+library(ggplot2)
+
+# Crear un data frame con varias curvas
+x_vals <- seq(0, 10, by = 0.1)
+pendiente <- 1  # pendiente positiva
+niveles_utilidad <- c(0, 2, 4)  # desplazamientos verticales (3 curvas)
+
+# Crear todas las curvas como líneas rectas: y = ax + k
+df <- do.call(rbind, lapply(seq_along(niveles_utilidad), function(i) {
+  k <- niveles_utilidad[i]
+  data.frame(
+    x = x_vals,
+    y = pendiente * x_vals + k,
+    U = factor(paste0("U", k), levels = paste0("U", niveles_utilidad)),
+    color_id = i
+  )
+}))
+
+# Colores personalizados
+colores <- c("#FFCCFF", "#FFFF99", "#99CCFF")
+
+# Graficar
+ggplot(df, aes(x = x, y = y, group = U, color = U)) +
+  geom_line(linewidth = 1.5) +
+  scale_color_manual(values = colores) +
+  labs(
+    x = "x",
+    y = "y",
+    title = ""
+  ) +
+  theme_minimal() +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0, 14))
+
+```
+
+<span style="color:#9feaff; font-size:18px;">
+c. A Roberto le encantan las hamburguesas y no le gustan las bebidas refrescantes. Si le sirven una bebida refrescante, se la bebe para ser educado.
+</span>
+
+```{r echo=FALSE}
+library(ggplot2)
+
+# Definir valores de hamburguesas
+x <- seq(0, 10, length.out = 300)
+
+# Definir niveles de utilidad (líneas horizontales)
+niveles_utilidad <- c(10, 8, 6)
+
+# Paleta Sugar Rush (tres colores)
+sugar_rush_colors <- c("#99CCFF", "#FFCCFF", "#FFFF99")
+
+# Crear data frame para las curvas horizontales
+datos <- data.frame(
+  x = rep(x, times = length(niveles_utilidad)),
+  y = rep(niveles_utilidad, each = length(x)),
+  curva = factor(rep(paste0("U = ", niveles_utilidad), each = length(x)))
+)
+
+# Graficar curvas de indiferencia horizontales
+ggplot(datos, aes(x = x, y = y, color = curva)) +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = sugar_rush_colors) +
+  labs(title = "",
+       x = "Hamburguesas",
+       y = "Bebidas",
+       color = "Nivel de utilidad") +
+  theme_minimal()
+
+```
+
+<span style="color:#9feaff; font-size:18px;">
+d. A Manuela le encantan las hamburguesas y las bebidas refrescantes, pero insiste en consumir exactamente una bebida refrescante por cada dos hamburguesas que come.
+</span>
+
+```{r manuela, echo=FALSE}
+library(ggplot2)
+# Configurar la gráfica vacía
+plot(NULL, xlim = c(0, 8), ylim = c(0, 5), xlab = "Bebidas", ylab = "Hamburguesas", 
+     main = "")
+grid()
+
+# Función para dibujar líneas cerradas para min(x, y) = k
+dibujar_min_linea <- function(k, color) {
+  # Línea vertical desde (k, k) hasta (k, ymax)
+  lines(c(k, k), c(k, 5), col = color, lwd = 2)
+  # Línea horizontal desde (k, k) hasta (xmax, k)
+  lines(c(k, 8), c(k, k), col = color, lwd = 2)
+}
+
+# Dibujar para diferentes valores de k
+dibujar_min_linea(1, "pink")
+dibujar_min_linea(2, "lightblue")
+
+# Leyenda
+legend("topright", legend = c("min(x, y) = 1", "min(x, y) = 2"), 
+       col = c("pink", "lightblue"), lwd = 2, bty = "n")
+```
+
+<span style="color:#9feaff; font-size:18px;">
+e. A Juan le encantan las hamburguesas, pero las bebidas refrescantes ni le gustan ni le disgustan.
+</span>
+
+```{r juana, echo=FALSE, fig.width=4, fig.height=4}
+library(ggplot2)
+# Definir el rango del eje Y (gasolina)
+y <- seq(0, 25, length.out = 100)
+
+# Crear la gráfica con la primera línea vertical
+plot(rep(1, 100), y, type = "l", col = "pink", lwd = 2,
+     xlim = c(0, 5), ylim = c(0, 25),
+     xlab = "Diseño", ylab = "Gasolina",
+     main = "")
+
+# Agregar más líneas verticales (mismo y, diferentes x)
+lines(rep(2, 100), y, col = "lightblue", lwd = 2)
+lines(rep(3, 100), y, col = "#FFFF99", lwd = 2)
+
+```
+
+<span style="color:#9feaff; font-size:18px;">
+f. María siempre recibe el doble de satisfacción de una hamburguesa más que de una bebida refrescante más.
+</span>
+
+```{r echo=FALSE}
+library(ggplot2)
+
+# Crear niveles de utilidad
+niveles_utilidad <- c(10, 14, 18)
+
+# Crear data frame con filtrado previo
+x_vals <- seq(0, 10, by = 0.1)
+curvas_df <- do.call(rbind, lapply(niveles_utilidad, function(u) {
+  df <- data.frame(
+    x = x_vals,
+    y = u - 2 * x_vals,
+    Utilidad = factor(paste("U =", u))
+  )
+  # Filtrar: mantener solo los valores en el rango visible
+  df[df$y >= 0 & df$y <= 10, ]
+}))
+
+# Asignar colores personalizados
+colores <- c("#FFCCFF", "#FFFF99", "#99CCFF")
+
+# Graficar
+ggplot(curvas_df, aes(x = x, y = y, color = Utilidad)) +
+  geom_line(linewidth = 1.5) +
+  scale_color_manual(values = colores) +
+  labs(
+    title = "",
+    x = "Hamburguesas",
+    y = "Bebidas refrescantes",
+    color = "Nivel de utilidad"
+  ) +
+  xlim(0, 10) + ylim(0, 10) +
+  theme_minimal(base_size = 14)
+
+```
+
+<span style="color:#ff65bd; font-size:18px;">
+3. Si Juana está dispuesta actualmente a cambiar 4 entradas de cine por 1 de baloncesto, entonces debe gustarle el baloncesto más que el cine. ¿Verdadero o falso? Explique su respuesta.
+</span>
+
+Falso, Que Juana esté dispuesta a cambiar 4 entradas de cine por 1 de baloncesto no significa necesariamente que le guste más el baloncesto que el cine. Solo quiere decir que, en este momento, una entrada de baloncesto le da la misma satisfacción que 4 de cine.
+
+En economía, cuando alguien hace un intercambio así, no se mide cuánto le gusta una cosa en general, sino cuánto valora una en comparación con la otra. Así que puede gustarle mucho el cine, pero si ahora valora más una entrada de baloncesto que varias de cine, hace el cambio.
+
+<span style="color:#ff65bd; font-size:18px;">
+4. Juana y Bernardo planean cada uno gastar 20.000 dólares en el diseño y el consumo de gasolina de un nuevo automóvil. Pueden elegir cada uno solo el diseño,solo el consumo de gasolina o una combinación de los dos. A Juana le da exactamente lo mismo el diseño y quiere el menor consumo posible de gasolina. A Bernardo le gustan por igual los dos y quiere gastar la misma cantidad en ambos. Muestre por medio de curvas de indiferencia y rectas presupuestarias la decisión que toma cada persona.
+</span>
+
+```{r, echo=FALSE, fig.width=6, fig.height=5}
+library(ggplot2)
+
+# Gasto total
+presupuesto <- 20000
+
+# Eje x: diseño (en dólares)
+# Eje y: consumo (en dólares)
+
+# Juana: curvas de indiferencia horizontales (valora solo consumo)
+niveles_consumo <- c(5000, 10000, 15000)
+curvas_juana <- do.call(rbind, lapply(niveles_consumo, function(c) {
+  data.frame(Diseño = seq(0, presupuesto, by = 1000),
+             Consumo = c,
+             Utilidad = factor(paste0("U", c / 5000)))
+}))
+
+# Restricción presupuestaria (igual para ambos)
+x_vals <- seq(0, presupuesto, by = 1000)
+rb <- data.frame(
+  Diseño = x_vals,
+  Consumo = presupuesto - x_vals
+)
+
+# Bernardo: curvas con pendiente -1 (valora ambos por igual)
+niveles_utilidad <- c(5000, 10000, 15000)
+curvas_bernardo <- do.call(rbind, lapply(niveles_utilidad, function(u) {
+  data.frame(Diseño = seq(0, u, by = 1000),
+             Consumo = u - seq(0, u, by = 1000),
+             Utilidad = factor(paste0("U", u / 5000)))
+}))
+
+# Graficar
+ggplot() +
+  # Restricción presupuestaria
+  geom_line(data = rb, aes(x = Diseño, y = Consumo), color = "black", linetype = "dashed") +
+
+  # Curvas de indiferencia Juana (horizontales)
+  geom_line(data = curvas_juana, aes(x = Diseño, y = Consumo, color = Utilidad), linewidth = 1.2) +
+  annotate("text", x = 1000, y = niveles_consumo, label = paste0("U", niveles_consumo / 5000), hjust = 0) +
+
+  # Curvas de indiferencia Bernardo (pendiente -1)
+  geom_line(data = curvas_bernardo, aes(x = Diseño, y = Consumo, group = Utilidad, color = Utilidad), linewidth = 1.2) +
+
+scale_color_manual(values = c("U1" = "lightblue", "U2" = "pink", "U3" = "#ff007c")) +
+  
+  labs(title = "Curvas de indiferencia y restricciones presupuestarias",
+       x = "Diseño (USD)",
+       y = "Consumo (USD)") +
+  theme_minimal(base_size = 13) +
+  xlim(0, presupuesto) +
+  ylim(0, presupuesto)
+
+```
+
+<span style="color:#ff65bd; font-size:18px;">
+5. Suponga que Brígida y Érica gastan su renta en dos bienes, alimentos (A) y vestido (V). Las preferencias de Brígida están representadas por la función de utilidad U(A, V) = 10AV, mientras que las de Érica están representadas por la función de utilidad U(A, V) = 0,202 V2.
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+a. Colocando los alimentos en el eje de abscisas y el vestido en el de ordenadas, identifique en un gráfico el conjunto de puntos que reportan a Brígida el mismo nivel de utilidad que la cesta (10,5). Haga lo mismo con Érica en otro gráfico.
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+b. Identifique en los dos mismos gráficos el conjunto de cestas que reportan a Brígida y a Érica el mismo nivel de utilidad que la cesta (15, 8).
+</span>
+
+```{r, echo=FALSE, fig.width=12, fig.height=5}
+library(ggplot2)
+library(gridExtra)
+
+# Niveles de utilidad
+U_brigida_1 <- 10 * 10 * 5     # U = 500
+U_brigida_2 <- 10 * 15 * 8     # U = 1200
+
+U_erica_1 <- 0.202 * 5^2       # U = 5.05
+U_erica_2 <- 0.202 * 8^2       # U = 12.83
+
+# Rango del eje x (alimentos)
+A_vals <- seq(1, 30, length.out = 100)
+
+# Brígida: V = U / (10A)
+brigida_df <- data.frame(
+  A = rep(A_vals, 2),
+  V = c(U_brigida_1 / (10 * A_vals), U_brigida_2 / (10 * A_vals)),
+  Utilidad = factor(c(rep("U = 500", 100), rep("U = 1200", 100)))
+)
+
+# Érica: V = sqrt(U / 0.202) → líneas horizontales
+V_erica_1 <- sqrt(U_erica_1 / 0.202)
+V_erica_2 <- sqrt(U_erica_2 / 0.202)
+erica_df <- data.frame(
+  A = rep(A_vals, 2),
+  V = c(rep(V_erica_1, 100), rep(V_erica_2, 100)),
+  Utilidad = factor(c(rep("U = 5.05", 100), rep("U = 12.83", 100)))
+)
+
+# Tema base
+base_theme <- theme_minimal(base_size = 13)
+
+# Gráfico de Brígida
+p1 <- ggplot(brigida_df, aes(x = A, y = V, color = Utilidad)) +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = c("U = 500" = "lightblue", "U = 1200" = "pink")) +
+  labs(title = "Brígida", x = "Alimentos (A)", y = "Vestido (V)") +
+  base_theme +
+  xlim(0, 30) + ylim(0, 20)
+
+# Gráfico de Érica
+p2 <- ggplot(erica_df, aes(x = A, y = V, color = Utilidad)) +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = c("U = 5.05" = "lightblue", "U = 12.83" = "pink")) +
+  labs(title = "Érica", x = "Alimentos (A)", y = "Vestido (V)") +
+  base_theme +
+  xlim(0, 30) + ylim(0, 20)
+
+# Mostrar los dos gráficos lado a lado
+grid.arrange(p1, p2, ncol = 2)
+
+
+```
+
+<span style="color:#9feaff; font-size:18px;">
+c. ¿Cree que Brígida y Érica tienen las mismas preferencias o preferencias distintas? Explique su respuesta.
+</span>
+No, Brígida y Érica no tienen las mismas preferencias, por estas razones:
+Brígida: su utilidad depende tanto de alimentos como de vestido → necesita ambos para aumentar su bienestar. Las curvas de indiferencia son hipérbolas que reflejan una RMS decreciente.
+Érica: su utilidad depende solo del vestido. Las curvas de indiferencia son líneas horizontales, lo que indica que no valora los alimentos. Para ella, cualquier cantidad de alimentos le da igual mientras tenga la misma cantidad de vestido.
+
+<span style="color:#ff65bd; font-size:18px;">
+6. Suponga que Juárez y Sanz han decidido asignar 1.000 dólares al año a un presupuesto de entretenimiento en forma de partidos de hockey o conciertos de rock. A los dos les gustan los partidos de hockey y los conciertos de rock y deciden consumir cantidades positivas de los dos. Sin embargo, sus preferencias por estos dos tipos de entretenimiento son muy diferentes. Juárez prefiere los partidos de hockey a los conciertos de rock, mientras que Sanz prefiere los conciertos de rock a los partidos de hockey.
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+a. Trace un conjunto de curvas de indiferencia para Juárez y otro para Sanz.
+</span>
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(gridExtra)
+
+# Valores para los ejes
+R_vals <- seq(1, 30, length.out = 100)
+H_vals <- seq(1, 30, length.out = 100)
+grid <- expand.grid(R = R_vals, H = H_vals)
+
+# Funciones de utilidad
+grid$U_juarez <- with(grid, R^0.3 * H^0.7)
+grid$U_sanz   <- with(grid, R^0.7 * H^0.3)
+
+# Paleta Sugar Rush
+sugar_rush_colors <- c("#FF66B3", "#FFCCFF", "#FFFF99", "#99CCFF", "#FF9999")
+
+# Tema base
+tema <- theme_minimal(base_size = 13)
+
+# Gráfico Juárez
+p1 <- ggplot(grid, aes(x = R, y = H, z = U_juarez)) +
+  geom_contour(aes(color = ..level..), linewidth = 1.2, bins = 4) +
+  scale_color_gradientn(colors = sugar_rush_colors) +
+  labs(title = "Juárez: Prefiere más hockey",
+       x = "Conciertos de Rock", y = "Partidos de Hockey", color = "Utilidad") +
+  xlim(0, 30) + ylim(0, 30) +
+  tema
+
+# Gráfico Sanz
+p2 <- ggplot(grid, aes(x = R, y = H, z = U_sanz)) +
+  geom_contour(aes(color = ..level..), linewidth = 1.2, bins = 4) +
+  scale_color_gradientn(colors = rev(sugar_rush_colors)) +
+  labs(title = "Sanz: Prefiere más conciertos",
+       x = "Conciertos de Rock", y = "Partidos de Hockey", color = "Utilidad") +
+  xlim(0, 30) + ylim(0, 30) +
+  tema
+
+# Mostrar lado a lado
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+<span style="color:#9feaff; font-size:18px;">
+b. Explique por qué los dos conjuntos de curvas son diferentes utilizando el concepto de relación marginal de sustitución.
+</span>
+
+Las curvas de indiferencia de Juárez y Sanz son distintas porque tienen preferencias diferentes, reflejadas en su Relación Marginal de Sustitución (RMS). Juárez tiene una RMS baja, ya que está dispuesto a ceder pocos partidos de hockey por conciertos, lo que indica que valora más el hockey (eje Y), y por eso sus curvas son más planas. En cambio, Sanz tiene una RMS alta, pues está dispuesto a ceder pocos conciertos por partidos de hockey, lo que refleja que prefiere los conciertos (eje X), y sus curvas son más inclinadas. La RMS varía según las preferencias: mientras más valioso es un bien para una persona, más dispuesta está a ceder unidades del otro bien para obtener más del preferido.
+
+<span style="color:#ff65bd; font-size:18px;">
+7. El precio de los DVD (D) es de 20 dólares y el de los CD (C) es de 10. Felipe tiene un presupuesto de 100 dólares para gastar en los dos bienes. Suponga que ya ha comprado un DVD y un CD. Además, hay tres DVD más y 5 CD más que le gustaría realmente comprar.
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+a. Dados los precios y la renta anteriores, trace su recta presupuestaria en un gráfico colocando los CD en el eje de abscisas.
+</span>
+
+La ecuación de la recta presupuestaria es:
+20𝐷+10𝐶=100
+Despejando 𝐷
+$$D=\frac{100 − 10𝐶}{20}$$
+Como ya compró 1 DVD y 1 CD, el resto de su presupuesto disponible es:
+100−(20+10)=70
+
+<span style="color:#9feaff; font-size:18px;">
+b. Teniendo en cuenta lo que ya ha comprado y lo que aún quiere comprar, identifique las tres cestas de CD y DVD que podría elegir. Suponga en esta parte de la pregunta que no puede comprar unidades fraccionarias.
+</span>
+
+Con $70 restantes,ahora qué combinaciones enteras de CDs y DVDs puede comprar (sujetas a su deseo de máximo 3 DVD adicionales y 5 CD adicionales, es decir, hasta 4 DVDs y 6 CDs en total):
+Probamos combinaciones (C, D) tales que:
+20𝐷+10𝐶≤ 100
+
+```{r echo=FALSE}
+# Crear una tabla de combinaciones que cumplen la ecuación
+tabla_puntos <- data.frame()
+
+for (C in 0:10) {
+  for (D in 0:5) {
+    if (10 * C + 20 * D == 100) {
+      tabla_puntos <- rbind(tabla_puntos, data.frame(CD = C, DVD = D))
+    }
+  }
+}
+
+# Mostrar la tabla
+print(tabla_puntos)
+```
+
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+# Ecuación: 20D + 10C = 100 → D = (100 - 10C)/20
+C <- seq(0, 10, by = 1)
+D <- (100 - 10*C)/20
+
+# Cestas posibles
+cestas <- data.frame(
+  CD = c(6, 4, 2),
+  DVD = c(2, 3, 4)
+)
+
+ggplot() +
+  geom_line(aes(x = C, y = D), color = "pink", linewidth = 1.2) +
+  geom_point(data = cestas, aes(x = CD, y = DVD), color = "lightblue", size = 3) +
+  geom_text(data = cestas, aes(x = CD, y = DVD, label = paste0("(", CD, ",", DVD, ")")),
+            vjust = -1, color = "lightblue") +
+  labs(
+    title = "",
+    x = "Cantidad de CDs",
+    y = "Cantidad de DVDs"
+  ) +
+  xlim(0, 10) + ylim(0, 6) +
+  theme_minimal()
+```
+
+
+<span style="color:#ff65bd; font-size:18px;">
+8. Ana tiene un trabajo que le obliga a viajar tres de cada cuatro semanas. Tiene un presupuesto anual para viajes y puede viajar en tren o en avión. La compañía aérea en la que suele viajar tiene un programa de descuentos para viajeros asiduos que reduce el coste de sus billetes según el número de millas que haya volado en un año dado. Cuando vuela 25.000 millas, la compañía le reduce el precio de sus billetes un 25 por ciento el resto del año. Cuando vuela 50.000 millas, se lo reduce un 50 por ciento el resto del año. Represente gráficamente la recta presupuestaria de Ana colocando las millas de tren en el eje de ordenadas y las de avión en el de abscisas.
+</span>
+
+<span style="color:#ffccf5">Presupuesto anual</span> $2000
+
+<span style="color:#ffccf5">Costo por milla de tren:</span> $0.20.
+
+<span style="color:#ffccf5">Costo por milla de avión sin descuento:</span> $0.40.
+
+<span style="color:#ffccf5">Si vuela más de 25,000 millas:</span> el precio por milla aérea baja a \$0.30.
+
+<span style="color:#ffccf5">Si vuela más de 50,000 millas:</span> el precio por milla aérea baja a \$0.20.
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+# Presupuesto total
+presupuesto <- 20000
+
+# Precios por tramo de avión
+precio_tren <- 0.20
+precio_avion_1 <- 0.40 # hasta 25,000 millas
+precio_avion_2 <- 0.30 # entre 25,001 y 50,000
+precio_avion_3 <- 0.20 # más de 50,000
+
+# Puntos de quiebre
+x1 <- 25000
+x2 <- 50000
+
+# Tramo 1 (0 - 25000 millas de avión)
+x_tramo1 <- seq(0, x1, length.out = 100)
+y_tramo1 <- (presupuesto - precio_avion_1 * x_tramo1) / precio_tren
+df1 <- data.frame(Avion = x_tramo1, Tren = y_tramo1, Tramo = "Tramo 1")
+
+# Tramo 2 (25000 - 50000 millas de avión)
+x_tramo2 <- seq(x1, x2, length.out = 100)
+gasto_tramo1 <- precio_avion_1 * x1
+y_tramo2 <- (presupuesto - gasto_tramo1 - precio_avion_2 * (x_tramo2 - x1)) / precio_tren
+df2 <- data.frame(Avion = x_tramo2, Tren = y_tramo2, Tramo = "Tramo 2")
+
+# Tramo 3 (más de 50000)
+x_tramo3 <- seq(x2, 100000, length.out = 100)
+gasto_tramo2 <- precio_avion_2 * (x2 - x1)
+gasto_total_previos <- gasto_tramo1 + gasto_tramo2
+y_tramo3 <- (presupuesto - gasto_total_previos - precio_avion_3 * (x_tramo3 - x2)) / precio_tren
+df3 <- data.frame(Avion = x_tramo3, Tren = y_tramo3, Tramo = "Tramo 3")
+
+# Unir todos los tramos
+df <- rbind(df1, df2, df3)
+
+# Graficar con colores por tramo
+ggplot(df, aes(x = Avion, y = Tren, color = Tramo)) +
+  geom_line(linewidth = 1.4) +
+  scale_color_manual(values = c("Tramo 1" = "lightblue", "Tramo 2" = "pink", "Tramo 3" = "#FFFF99")) +
+  labs(
+    title = "Recta presupuestaria de Ana con descuentos por tramos",
+    x = "Millas en avión",
+    y = "Millas en tren",
+    color = "Tramo"
+  ) +
+  theme_minimal(base_size = 13)
+
+```
+
+<span style="color:#ff65bd; font-size:18px;">
+9. Débora normalmente compra una bebida refrescante cuando va al cine y puede elegir entre tres tamaños.La bebida de 8 onzas cuesta 1,50 dólares, la de 12 cuesta 2,00 y la de 16 cuesta 2,25. Describa la restricción presupuestaria de Débora cuando decide la cantidad de onzas de bebida que compra (suponga que puede tirar sin costes la bebida que no quiera).
+</span>
+
+```{r tabla-bebidas, echo=FALSE}
+library(knitr)
+
+tamaño <- c("8 oz", "12 oz", "16 oz")
+precio_total <- c(1.50, 2.00, 2.25)
+precio_onza <- round(precio_total / c(8, 12, 16), 4)
+
+tabla <- data.frame(
+  "Tamaño (onzas)" = tamaño,
+  "Precio ($)" = precio_total,
+  "Precio por onza ($/oz)" = precio_onza
+)
+
+kable(tabla, align = "c", caption = "Precios por bloque en bebidas de cine")
+```
+
+Débora enfrenta precios por bloque al comprar bebidas en el cine, donde el precio por onza disminuye al elegir un tamaño mayor: 8 oz cuestan $1.50 (≈$0.1875/oz), 12 oz cuestan $2.00 (≈$0.1667/oz) y 16 oz cuestan $2.25 (≈$0.1406/oz). Dado que puede desechar sin costo el exceso, su decisión se basa en el precio total y su preferencia por la cantidad, no en restricciones estrictas de presupuesto. Esta estructura de precios incentiva la compra de tamaños grandes, incluso si no consume todo el contenido.
+
+<span style="color:#ff65bd; font-size:18px;">
+10. Antonio compra cinco libros de texto nuevos durante su primer año de universidad, cada uno de los cuales le cuesta 80 dólares. Los usados solo cuestan 50. Cuando la librería anuncia que el precio de los libros nuevos experimentará una subida del 10 por ciento y el de los usados una subida del 5 por ciento, su padre le ofrece 40 dólares extra.
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+a. ¿Qué ocurre con la recta presupuestaria de Antonio? Ilustre el cambio colocando los libros nuevos en el eje de ordenadas.
+</span>
+
+La recta presupuestaria de Antonio cambia porque los precios de ambos bienes aumentan, pero también recibe una compensación monetaria ($40).
+Antes del cambio:
+
+Precio libro nuevo = $80
+
+Precio libro usado = $50
+
+Presupuesto = 5 × 80 = 400 dólares
+
+Después del cambio:
+
+Nuevo precio libro nuevo = 80 × 1.10 = 88
+
+Nuevo precio libro usado = 50 × 1.05 = 52.5
+
+Nuevo presupuesto = 400 + 40 = 440
+
+
+Esto hace que la nueva recta presupuestaria gire hacia adentro (porque los precios suben), pero se compensa parcialmente con el aumento de presupuesto.
+
+``` {r recta-antonio, echo=FALSE, fig.width=7, fig.height=5}
+library(ggplot2)
+
+# Precios antes
+p_nuevo <- 80
+p_usado <- 50
+presupuesto_antes <- 400
+
+# Precios después
+p_nuevo_nuevo <- 88
+p_usado_nuevo <- 52.5
+presupuesto_despues <- 440
+
+# Ejes: libros usados (x), libros nuevos (y)
+max_usados_antes <- presupuesto_antes / p_usado
+max_nuevos_antes <- presupuesto_antes / p_nuevo
+
+max_usados_despues <- presupuesto_despues / p_usado_nuevo
+max_nuevos_despues <- presupuesto_despues / p_nuevo_nuevo
+
+df <- data.frame(
+  Libros_usados = c(0, max_usados_antes, NA, 0, max_usados_despues),
+  Libros_nuevos = c(max_nuevos_antes, 0, NA, max_nuevos_despues, 0),
+  Escenario = c("Antes", "Antes", NA, "Después", "Después")
+)
+
+ggplot(df, aes(x = Libros_usados, y = Libros_nuevos, color = Escenario)) +
+  geom_line(linewidth = 1.5) +
+  scale_color_manual(values = c("Antes" = "lightblue", "Después" = "pink")) +
+  labs(
+    x = "Libros usados",
+    y = "Libros nuevos",
+    title = "Cambio en la recta presupuestaria de Antonio"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+<span style="color:#9feaff; font-size:18px;">
+b. ¿Mejora o empeora el bienestar de Antonio después de la variación del precio? Explique su respuesta.
+</span>
+
+Depende. Aunque recibe más dinero, el aumento de precios es proporcionalmente mayor, lo que reduce su poder adquisitivo. Con el nuevo presupuesto de $440:
+
+Antes: podía comprar hasta 5 libros nuevos o 8 libros usados.
+
+Ahora: puede comprar hasta 5 libros usados y 5 libros nuevos, pero en general, la cantidad máxima de cada tipo baja.
+
+El bienestar de Antonio probablemente empeora, porque el aumento de $40 no compensa totalmente el alza de precios en términos reales.
+
+<span style="color:#ff65bd; font-size:18px;">
+11. Los consumidores de Georgia pagan el doble por los aguacates que por los melocotones. Sin embargo, los dos tienen el mismo precio en California. Si los consumidores de los dos estados maximizan la utilidad, ¿serán iguales las relaciones marginales de sustitución de los consumidores de los dos estados? En caso negativo, ¿cuál será mayor?
+</span>
+
+No, la relación marginal de sustitución (RMS) no será igual en Georgia y en California porque los precios son diferentes en cada estado.
+
+En California, los aguacates y los melocotones tienen el mismo precio, así que los consumidores están dispuestos a cambiar 1 melocotón por 1 aguacate para estar igual de satisfechos.
+
+Pero en Georgia, los aguacates cuestan el doble que los melocotones. Eso significa que para que los consumidores sigan maximizando su bienestar, tienen que estar dispuestos a dar 2 melocotones por 1 aguacate.
+
+Por lo que la RMS será mayor en Georgia, porque allí los aguacates son más caros, y la gente valora más obtener uno adicional.
+
+```{r echo=FALSE, results='asis'}
+cat('
+<span style="color:#ffccf5">RMS:</span>
+
+$$
+RMS_{A,M} = \\frac{P_M}{P_A}
+$$
+
+<span style="color:#ffccf5">En California, donde los aguacates y melocotones cuestan lo mismo:</span>
+
+$$
+RMS_{CA} = \\frac{P_M}{P_A} = \\frac{1}{1} = 1
+$$
+
+<span style="color:#ffccf5">En Georgia, donde los aguacates cuestan el doble que los melocotones:</span>
+
+$$
+RMS_{GA} = \\frac{P_M}{P_A} = \\frac{1}{2} = 2
+$$
+')
+```
+
+<span style="color:#ff65bd; font-size:18px;">
+12. Benito reparte su presupuesto para el almuerzo entre dos bienes, pizza y burritos.
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+a. Muestre la cesta óptima de Benito en un gráfico colocando la pizza en el eje de abscisas.
+</span>
+
+La curva de indiferencia 𝑦=(9.19𝑥0.6)2.5y=( x 0.6​9.19) 2.5
+representa el nivel de satisfacción de Benito.
+Interpretación: La cesta óptima está en el punto donde la curva de indiferencia toca la recta presupuestaria, es decir, donde Benito logra la mayor satisfacción posible con su presupuesto.
+
+<span style="color:#9feaff; font-size:18px;">
+b. Suponga ahora que la pizza está sujeta a impuestos, lo que provoca una subida del precio del 20 por ciento. Ilustre la nueva cesta óptima de Benito.
+</span>
+
+La nueva recta presupuestaria es 
+𝑦= 10 − 0.6x, con una pendiente más empinada porque la pizza es más cara.
+El punto óptimo cambió a (10,4).
+Como la pizza cuesta más, Benito puede comprar menos cantidad de pizza con el mismo dinero. Esto hace que cambie su combinación óptima: compra menos pizza y más burritos.
+
+<span style="color:#9feaff; font-size:18px;">
+c. Suponga que la pizza se raciona y Benito recibe una cantidad menor que la que desea. Ilustre la nueva cesta óptima de Benito
+</span>
+
+Se vuelve a usar la recta presupuestaria original 
+ y=10−0.5x, pero ahora Benito no puede comprar toda la pizza que desea.
+Se marca el nuevo punto (8,6), una combinación forzada por la restricción.
+Aunque los precios no han cambiado, Benito está limitado en la cantidad de pizza que puede comprar, así que consume más burritos para compensar.
+
+```{r echo=FALSE}
+library(ggplot2)
+
+# Gráfico a: elección óptima original
+x_vals <- seq(1, 20, 0.1)
+df_a <- data.frame(
+  Pizza = x_vals,
+  Burritos = 10 - 0.5 * x_vals,
+  Indiferencia = (9.19 / x_vals^0.6)^2.5
+)
+
+g1 <- ggplot() +
+  geom_line(data = df_a, aes(x = Pizza, y = Burritos), color = "pink", linewidth = 1.2) +
+  geom_line(data = df_a, aes(x = Pizza, y = Indiferencia), color = "lightblue", linewidth = 1.2, linetype = "dashed") +
+  geom_point(aes(x = 12, y = 4), size = 3, color = "black") +
+  labs(title = "a) Cesta óptima inicial", x = "Pizza", y = "Burritos") +
+  theme_minimal(base_size = 14)
+
+# Gráfico b: impuesto a la pizza
+df_b <- data.frame(
+  Pizza = x_vals,
+  Burritos = 10 - 0.6 * x_vals
+)
+
+g2 <- ggplot(df_b, aes(x = Pizza, y = Burritos)) +
+  geom_line(color = "pink", linewidth = 1.2) +
+  geom_point(aes(x = 10, y = 4), size = 3, color = "black") +
+  labs(title = "b) Subida del precio de la pizza (impuesto)", x = "Pizza", y = "Burritos") +
+  theme_minimal(base_size = 14)
+
+# Gráfico c: racionamiento de pizza
+df_c <- data.frame(
+  Pizza = x_vals,
+  Burritos = 10 - 0.5 * x_vals
+)
+
+g3 <- ggplot(df_c, aes(x = Pizza, y = Burritos)) +
+  geom_line(color = "pink", linewidth = 1.2) +
+  geom_point(aes(x = 8, y = 6), size = 3, color = "black") +
+  labs(title = "c) Racionamiento de pizza", x = "Pizza", y = "Burritos") +
+  theme_minimal(base_size = 14)
+
+# Mostrar uno por uno
+print(g1)
+print(g2)
+print(g3)
+
+```
+
+<span style="color:#ff65bd; font-size:18px;">
+13. Brenda quiere comprar un automóvil nuevo y tiene un presupuesto de 25.000 dólares. Acaba de encontrar una revista que asigna a cada automóvil un índice de diseño y un índice de consumo de gasolina. Cada índice va de 1 a 10 y 10 representa el máximo diseño o el menor consumo de gasolina. Observando la lista de automóviles, ve que, en promedio, cuando el índice de diseño aumenta en una unidad, el precio del automóvil sube en 5.000 dólares. También ve que cuando el índice de consumo de gasolina aumenta en una unidad, el precio del automóvil sube en 2.500 dólares.
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+a. Ilustre las distintas combinaciones de diseño (D) y consumo de gasolina (G) que podría seleccionar Brenda con su presupuesto de 25.000 dólares. Coloque el consumo de gasolina en el eje de abscisas.
+</span>
+
+
+Costo por unidad de diseño (D): 500 USD ⇒ total diseño máximo = 25,000 / 500 = 50
+
+Costo por unidad de gasolina (G): 250 USD ⇒ total gasolina máximo = 25,000 / 250 = 100
+
+Recta presupuestaria (en términos de D): 500D+250G=25,000⇒D=50−0.5G
+
+```{r echo=FALSE}
+# Crear gráfico vacío con nuevo rango
+plot(0, 0, type = "n", xlim = c(0, 100), ylim = c(0, 50),
+     xlab = "Consumo de gasolina (G)", ylab = "Diseño (D)",
+     main = "Recta presupuestaria de Brenda (escala 0-100)")
+
+# Dibujar la recta presupuestaria
+abline(a = 50, b = -0.5, col = "pink", lwd = 2)
+
+# Agregar puntos extremos
+points(0, 50, pch = 16, col = "pink")     # Solo diseño
+points(100, 0, pch = 16, col = "pink")    # Solo gasolina
+
+# Etiquetas
+text(0, 52, "Solo diseño (D = 50, G = 0)", pos = 4, col = "pink")
+text(100, 2, "Solo gasolina (D = 0, G = 100)", pos = 2, col = "pink")
+
+```
+
+<span style="color:#9feaff; font-size:18px;">
+b. Suponga que las preferencias de Brenda son tales que siempre recibe el triple de satisfacción de una unidad más de diseño que de una unidad menos de consumo de gasolina. ¿Qué tipo de automóvil elegirá?
+</span>
+
+Precio por unidad de diseño (𝐷): 5,000 USD  
+Precio por unidad de gasolina (𝐺): 2,500 USD
+
+$$
+\frac{P_D}{P_G} = \frac{5000}{2500} = 2
+$$
+
+Como RMS = 3 > 2, Brenda valora más el diseño que lo que cuesta relativamente.  
+Por lo tanto, Brenda querrá más diseño y menos gasolina de lo que le ofrece el punto de tangencia.  
+Su elección será en la esquina superior izquierda de la recta presupuestaria.
+
+<span style="color:#ffccf5">Tipo de automóvil que elegirá:</span>
+
+Un auto con alto diseño y bajo consumo de gasolina, o sea:  
+D = 50,  
+G = 0
+
+---
+
+<span style="color:#9feaff; font-size:18px;">
+c. Suponga que la relación marginal de sustitución de Brenda (del diseño por consumo de gasolina) es igual a D/(4G). ¿Qué valor de cada índice le gustaría que tuviera su automóvil?
+</span>
+
+Igualar RMS al precio relativo:
+
+$$
+\frac{D}{4G} = \frac{P_D}{P_G} = 2 \Rightarrow D = 8G
+$$
+
+$$
+500D + 250G = 25,000 \Rightarrow 500(8G) + 250G = 25,000 \Rightarrow 4250G = 25,000 \Rightarrow G = \frac{25000}{4250} = \frac{100}{17} \approx 5.88 \Rightarrow D = 8G = \frac{800}{17} \approx 47.06
+$$
+
+<span style="color:#ffccf5">Elección óptima de índices:</span>
+
+$$
+\begin{align*}
+G &= \frac{100}{17} \approx 5.88 \\
+D &= \frac{800}{17} \approx 47.06
+\end{align*}
+$$
+
+---
+<span style="color:#9feaff; font-size:18px;">
+ d. Suponga que la relación marginal de sustitución de Brenda (del diseño por consumo de gasolina) es igual a $$\frac{3D}{G}$$ ¿Qué valor de cada índice le gustaría que tuviera su automóvil?
+</span>
+
+
+$$
+\frac{3D}{G} = 2 \Rightarrow 3D = 2G \Rightarrow D = \frac{2G}{3}
+$$
+
+Sustituir en la restricción:
+
+$$
+\begin{align*}
+500D + 250G &= 25{,}000 \\
+500\left(\frac{2}{3}G\right) + 250G &= 25{,}000 \\
+\frac{1000}{3}G + 250G &= 25{,}000 \\
+\left(\frac{1000}{3} + 250\right)G &= 25{,}000 \\
+\frac{1750}{3}G &= 25{,}000 \\
+G &= \frac{25{,}000 \cdot 3}{1750} = \frac{75{,}000}{1750} = \frac{300}{7} \approx 42.86 \\
+D &= \frac{2}{3}G = \frac{2}{3} \cdot \frac{300}{7} = \frac{200}{7} \approx 28.57
+\end{align*}
+$$
+
+<span style="color:#ffccf5">Elección óptima de índices:</span>
+
+$$
+\begin{align*}
+G &= \frac{300}{7} \approx 42.86 \\
+D &= \frac{200}{7} \approx 28.57
+\end{align*}
+$$
+<span style="color:#ff65bd; font-size:18px;">
+14. Concha tiene una renta mensual de 200 dólares que reparte entre dos bienes: carne de vacuno y patatas. 
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+a. Suponga que la carne cuesta 4 dólares por libra y las patatas 2 dólares por libra. Trace su restricción presupuestaria.
+</span>
+
+restrinccion presupuestaria M = 200
+
+Precio de carne vacuna = 4
+
+Precio de patatas = 2
+
+$$4V+2P=200$$
+$$2V+P=100$$
+$$V=\frac{100-P}{2}$$
+Puntos extremos
+
+Si P = 0 entonces V = 50
+Si V = 0 entonces P = 100
+```{r echo=FALSE}
+library(ggplot2)
+
+# Ecuación de la recta presupuestaria: V = 50 - 0.5*P
+P <- seq(0, 100, 1)      # eje X: papas
+V <- 50 - 0.5 * P        # eje Y: carne
+
+df <- data.frame(P = P, V = V)
+
+ggplot(df, aes(x = P, y = V)) +
+  geom_line(color = "pink", size = 1.2) +
+  labs(title = "Restricción presupuestaria inicial",
+       x = "Libras de patatas (P)",
+       y = "Libras de carne (V)") +
+  theme_minimal()
+
+```
+
+<span style="color:#9feaff; font-size:18px;">
+b. Suponga también que su función de utilidad viene dada por la ecuación U(V, P) = 2V + P. ¿Qué combinación de carne de vacuno y patatas debería comprar para maximizar su utilidad? Pista: la carne de vacuno y las patatas son sustitutivos perfectos.
+</span>
+
+Maximizar utilidad: U (V,P) = 2V + P
+
+Son sustitutos perfectos, la RMS es constante 
+
+$$RMS=\frac{MUV}{MUP}=\frac{2}{1}=2$$
+$$\frac{PV}{PP}=\frac{4}{2}=2$$
+como la tasa marginal de sustitucion y la relacion de precios es indiferente entre ambos cualquiera combinacion sobre la restrinccion es optima 
+
+ejemplo
+
+V=25, P=0
+
+V=0, P=100
+
+V=10 P=80
+
+Todas dan utilidad maxima de U = 2V + P = 50
+
+<span style="color:#9feaff; font-size:18px;">
+c. El supermercado de Concha tiene una promoción especial. Si compra 20 libras de patatas (a 2 dólares por libra), obtiene gratis las 10 libras siguientes. Esta oferta solo es válida en las 20 primeras libras que compra. Todas las patatas que superan las 20 primeras libras (excluidas las de regalo) siguen costando 2 dólares la libra. Trace su restricción presupuestaria.
+</span>
+
+Tramos de la restrinccion presupuestaria
+
+Hasta 20lb de patatas sin promocion
+
+4V + 2P = 200
+
+Entre 20lb y 30lb de patatas
+
+Solo paga $40
+
+Le quedan $160 para la carne
+
+Puede comprar hasta
+
+$$V=\frac{160}{4}=40$$
+Punto especial (30,40)
+
+Por cada libra adicional
+
+4V + 2 (P-10) = 200
+
+4V + 2P = 220
+
+$$\frac{110-p}{2}$$
+```{r echo=FALSE}
+library(ggplot2)
+
+# Crear los datos para cada tramo
+x1 <- seq(0, 20, by = 0.1)
+y1 <- 50 - 0.5 * x1
+
+x2 <- seq(20.1, 30, by = 0.1)
+y2 <- rep(40, length(x2))
+
+x3 <- seq(30.1, 50, by = 0.1)
+y3 <- 50 - 0.5 * x3
+
+# Crear data frames para cada tramo, con una columna 'tramo'
+df1 <- data.frame(x = x1, y = y1, tramo = "Tramo 1")
+df2 <- data.frame(x = x2, y = y2, tramo = "Tramo 2")
+df3 <- data.frame(x = x3, y = y3, tramo = "Tramo 3")
+
+# Unir todos los tramos en uno solo
+df <- rbind(df1, df2, df3)
+
+# Definir colores para cada tramo
+colores_tramos <- c("Tramo 1" = "#FF66B3", "Tramo 2" = "#99CCFF", "Tramo 3" = "#FFFF99")
+
+# Graficar con colores por tramo
+ggplot(df, aes(x = x, y = y, color = tramo)) +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = colores_tramos) +
+  labs(title = "Curva de Indiferencia",
+       x = "Bien X",
+       y = "Bien Y",
+       color = "Tramo") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+<span style="color:#9feaff; font-size:18px;">
+d. Se produce una pérdida de patatas, por lo que sube su precio a 4 dólares la libra. El supermercado retira su promoción. ¿Cómo es ahora la restricción presupuestaria de Concha? ¿Qué combinación de carne de vacuno y patatas maximiza su utilidad?
+</span>
+
+Precio de V = 4$/lb
+Precio de P = 4$/lb
+Renta: 200$
+
+Nueva restricción presupuestaria:
+
+$$4V+4P=200⇒V+P=50⇒V=50−P$$
+
+maximizar la utilidad
+funcion : u (v,p)= 2v+p
+
+RMS y relacion de precios 
+
+$$
+RMS = \frac{2}{1} = 2 \frac{pv}{pp}= \frac{4}{4}=1
+$$
+RMS > Relacion de precios 
+
+Gasta todo en carne 
+$$
+V = \frac{200}{4} = 50 P=0
+$$
+<span style="color:#ff65bd; font-size:18px;">
+15. Juana recibe utilidad de los días que dedica a viajar de vacaciones dentro de su país (D) y de los días que dedica a viajar de vacaciones por el extranjero (F); la utilidad viene dada por la función U(D, F) = 10DF. Además, el precio de un día dedicado a viajar por su país es de 100 dólares y el de un día dedicado a viajar por el extranjero es de 400 dólares y el presupuesto anual de Juana para viajes es de 4.000 dólares.
+</span>
+
+<span style="color:#9feaff; font-size:18px;">
+a. Ilustre la curva de indiferencia correspondiente a una utilidad de 800 y la curva de indiferencia correspondiente a una utilidad de 1.200.
+</span>
+
+Funcion de utilidad U (D,F) = 10DF
+
+Precio por dia de viaje $400
+
+presupuesto total $4000
+
+Curva de indiferencia para U (D,F) = 800
+
+$$10DF = 800$$
+$$DF = 80$$
+$$F = 80/D$$
+Para U (D,F) = 1200
+
+$$10DF=120$$
+$$F = \frac{120}{D}$$
+```{r echo=FALSE}
+library(ggplot2)
+
+# Dominio de x
+x <- seq(1, 100, by = 1)
+
+# Funciones
+f1 <- 80 / x
+f2 <- 120 / x
+
+# Data frame
+df <- data.frame(
+  x = x,
+  f1 = f1,
+  f2 = f2
+)
+
+# Gráfico con ambas curvas en línea sólida
+ggplot(df, aes(x = x)) +
+  geom_line(aes(y = f1), color = "lightblue", size = 1.2) +
+  geom_line(aes(y = f2), color = "pink", size = 1.2) +
+  labs(title = "",
+       x = "x",
+       y = "f(x)") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(limits = c(0, 100))
+
+```
+
+<span style="color:#9feaff; font-size:18px;">
+b. Represente gráficamente la recta presupuestaria de Juana en el mismo gráfico.
+</span>
+
+restrinccion presupuestaria
+
+presupuesto total
+
+$$100D + 400F = 4000$$
+$$D + 4F = 40$$
+$$ F = \frac{40-D}{4} $$
+```{r echo=FALSE}
+library(ggplot2)
+
+# Dominio de x
+x <- seq(1, 100, by = 1)
+
+# Funciones
+f1 <- 80 / x
+f2 <- 120 / x
+f3 <- -1/4 * x + 10  # Recta que va de (0,10) a (40,0)
+
+# Data frame
+df <- data.frame(
+  x = x,
+  f1 = f1,
+  f2 = f2,
+  f3 = f3
+)
+
+# Gráfico con las tres funciones
+ggplot(df, aes(x = x)) +
+  geom_line(aes(y = f1), color = "pink", size = 1.2) +
+  geom_line(aes(y = f2), color = "lightblue", size = 1.2) +
+  geom_line(aes(y = f3), color = "#78acff", size = 1.2) +
+  labs(title = "",
+       x = "x",
+       y = "f(x)") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(limits = c(0, 100))
+
+```
+
+<span style="color:#9feaff; font-size:18px;">
+c. ¿Puede permitirse Juana cualquiera de las cestas que le reportarían una utilidad de 800? ¿Y una utilidad de 1.200?
+</span>
+
+es alcanzable si su punto se encuentra debajo de la recta de presupuesto 
+curva V = 1200, puede que no toda la curva este al alcanze x depende de si alguna parte toca la recta presupuestaria 
+
+<span style="color:#9feaff; font-size:18px;">
+d. Halle la elección de los días dedicados a viajar por su país y los días dedicados a viajar por el extranjero que maximiza la utilidad de Juana.
+</span>
+
+eleccion optima maximizadora de utilidad 
+Maximixar U (D,F) = 10DF
+sujeta a 
+$$100D+400F=4000$$
+$$D+4F-40$$
+$$F=\frac{40-D}{4}$$
+<span style="color:#ff65bd; font-size:18px;">
+16. Julio recibe utilidad del consumo de alimentos (A) y de vestido (V) que viene dada por la función de utilidad U(A, V) = AV. Además, el precio de los alimentos es de 2 dólares por unidad, el precio del vestido es de 10 dólares por unidad y la renta semanal de Julio es de 50 dólares.
+</span>
+
+Funcion de utilidad U (A,V) = AV
+
+Precio de alimentos PA = $2
+
+Precio de vestidos PV = $10
+
+Renta semanal = $50
+
+<span style="color:#9feaff; font-size:18px;">
+a. ¿Cuál es la relación marginal de sustitución de Julio del vestido por alimentos cuando se maximiza la utilidad? Explique su respuesta.
+</span>
+
+Derivadas marginales 
+UA = V UV = A
+Relacion marginal de sustitucion 
+La RMS de vestidos por alimentos es:
+$$
+RMS = \frac{UV}{UA} = \frac{A}{V}
+$$
+Maximizar utilidad, se iguala RMS al cociente de precios:
+$$
+\frac{A}{V} = \frac{PA}{PV} = \frac{2}{10} = \frac{1}{5}
+$$
+$$
+A=\frac{1}{5}V\approx 0.96
+$$
+$$
+2A + 10B = 50
+$$
+$$
+2(\frac{1}{2}V)+10V=50
+$$
+$$
+\frac{2}{5}V+10V=50
+$$
+$$
+\frac{52}{5}V=50
+$$
+
+$$
+V=\frac{250}{52}\approx 4.81
+$$
+
+la tasa marginal de sustitucion en el punto optimo es $$\frac{1}{5}$$ porque es igual al cociente de precios $$ \frac{2}{10} $$ lo que garantiza la maxima utilidad para julio 
+
+<span style="color:#9feaff; font-size:18px;">
+b. Suponga que Julio está consumiendo una cesta con más alimentos y menos vestido que su cesta que maximiza la utilidad. ¿Sería mayor su relación marginal de sustitución de vestido por alimentos o menor que su respuesta a la parte a? Explique su respuesta.
+</span>
+
+La tasa marginal de sustitucion es $$ RMS = \frac{A}{V}$$ $$RMS>\frac{1}{5}$$
+Julio valora mas el vestido que los alimentos (mas utilidad marginal al vestido), le conviene consumir mas vestido y menos alimentos 
+
+<span style="color:#ff65bd; font-size:18px;">
+17. La utilidad que obtiene Mercedes del consumo de alimentos, A, y de vestido, V, viene dada por U(A, V) = AV. Suponga que en 1990 su renta es de 1.200 dólares y que los precios de los alimentos y del vestido son de 1 dólar por unidad de cada uno. Sin embargo, en 2000 el precio de los alimentos ha subido a 2 dólares y el del vestido a 3. Sea 100 el índice del coste de la vida correspondiente a 1990. Calcule el índice ideal del coste de la vida y el de Laspeyres correspondiente a Mercedes en 2000. (Pista: con estas preferencias, Mercedes gastará las mismas cantidades en alimentos y vestido.)
+</span>
+
+<span style="color:#ffccf5">Funcion de utilidad: U(A,V)=AV</span>
+
+1990:
+Ingreso = 1200
+PA=1
+PV=1
+2000:
+PA=2
+PV=3
+
+<span style="color:#ffccf5">Cantidad optima en 1990</span>
+
+Gasto A = 600
+Gasto V = 600
+U1990 = 600 X 600 = 360000
+
+<span style="color:#ffccf5">Indice ideal de coste de vida</span>
+
+Buscamos el minimo gasto en 2000 para lograr la misma utilidad
+U = 360000 con precios nuevos; U = AV = 360000; PA = 2, PV = 3
+X = Gastado en cada uno:
+x = 2A X=3V
+$$A = \frac{x}{2} B=\frac{x}{3}$$ 
+$$U=AV=(\frac{x}{2})(\frac{x}{3})=\frac{x^2}{6}$$
+$$\frac{x^2}{6}=360000$$
+$$x^2=2160000$$
